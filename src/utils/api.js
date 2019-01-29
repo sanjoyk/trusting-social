@@ -72,7 +72,6 @@ function fetchImpl(path, config, fetchCb) {
         // throw to .catch below
         error = new ServerError(response.statusText, response.status, path);
       } else {
-        debugger
         error = new APIError(data, response.status, path);
       }
 

@@ -5,7 +5,7 @@ import debounce from "lodash.debounce";
 import GridItem from '../../app-components/grid-item';
 import { withStyles } from '@material-ui/core/styles';
 
-import { LazyLoadImage, trackWindowScroll } from 'react-lazy-load-image-component';
+import { LazyLoadImage, trackWindowScroll, LazyLoadComponent } from 'react-lazy-load-image-component';
 import AppLoader from '../../app-components/app-loader';
 
 
@@ -74,47 +74,49 @@ class ArticleList extends PureComponent {
           {
             Object.entries(articlesByIds).map(([key, { snippet, multimedia, pub_date: pubDate, source }]) => {
               return (
-                <GridItem style={{ display: "inline-block", boxSizing: "border-box" }} xs={4} sm={4} md={4} key={key}>
-                  <div className={classes.articleContainer}>
-                    <LazyLoadImage
-                      src={this.getImageUrl(multimedia)}
-                      effect="blur"
-                      alt=""
-                      width="100%"
-                      scrollPosition={scrollPosition}
-                      beforeLoad={() => { console.log("laoding before") }}
-                      afterLoad={() => console.log("After load")}
-                      delayTime={10000}
-                      threshold={-100}
-                      placeholder={<AppLoader />}
-                    />
-                    <p style={{
-                      textTransform: "uppercase",
-                      color: "#47c8ec",
-                      fontSize: "12px",
-                      fontWeight: "400",
-                      fontStyle: "normal",
-                      fontStretch: "normal",
-                      lineHeight: "1.17",
-                      letterSpacing: "normal",
-                      textAlign: "left",
-                    }}>
-                      {`${source}/${pubDate}`}
-                    </p>
+                <LazyLoadComponent key={key} >
+                  <GridItem style={{ display: "inline-block", boxSizing: "border-box" }} xs={4} sm={4} md={4}>
+                    <div className={classes.articleContainer}>
+                      <LazyLoadImage
+                        src={this.getImageUrl(multimedia)}
+                        effect="blur"
+                        alt=""
+                        width="100%"
+                        scrollPosition={scrollPosition}
+                        beforeLoad={() => { console.log("laoding before") }}
+                        afterLoad={() => console.log("After load")}
+                        delayTime={10000}
+                        threshold={-100}
+                        placeholder={<AppLoader />}
+                      />
+                      <p style={{
+                        textTransform: "uppercase",
+                        color: "#47c8ec",
+                        fontSize: "12px",
+                        fontWeight: "400",
+                        fontStyle: "normal",
+                        fontStretch: "normal",
+                        lineHeight: "1.17",
+                        letterSpacing: "normal",
+                        textAlign: "left",
+                      }}>
+                        {`${source}/${pubDate}`}
+                      </p>
 
-                    <h2 style={{
-                      paddingTop: "10px",
-                      fontFamily: "Noto Serif,serif",
-                      fontSize: "20px",
-                      fontWeight: "700",
-                      lineHeight: "1.4",
-                      textAlign: "left",
-                      color: "#010001",
-                    }}>
-                      {snippet}
-                    </h2>
-                  </div>
-                </GridItem>
+                      <h2 style={{
+                        paddingTop: "10px",
+                        fontFamily: "Noto Serif,serif",
+                        fontSize: "20px",
+                        fontWeight: "700",
+                        lineHeight: "1.4",
+                        textAlign: "left",
+                        color: "#010001",
+                      }}>
+                        {snippet}
+                      </h2>
+                    </div>
+                  </GridItem>
+                </LazyLoadComponent>
               )
             }
 
