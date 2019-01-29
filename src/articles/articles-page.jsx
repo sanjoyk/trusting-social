@@ -5,8 +5,7 @@ class ArticlesPage extends PureComponent {
   render() {
     return (
       <div>
-        Article List
-        {/* <AriclesContainer /> */}
+        <AriclesContainer />
       </div >
     )
   }

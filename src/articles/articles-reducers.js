@@ -20,16 +20,28 @@ const articlesByIds = (state = {}, action) => {
 }
 
 const articlesSettingsDefault = {
-  isLoadingArticles: false
+  isLoadingArticles: false,
+  currentpage: 0,
+  hasMoreData: true,
+
 }
 const articlesSettings = (state = articlesSettingsDefault, action) => {
   switch (action.type) {
     case ArticlesAction.LOAD.REQUEST: {
       return { ...state, isLoadingArticles: true };
     }
-    case ArticlesAction.LOAD.FAILURE:
+    case ArticlesAction.LOAD.FAILURE: {
+      return {
+        ...state,
+        isLoadingArticles: false,
+      };
+    }
     case ArticlesAction.LOAD.SUCCESS: {
-      return { ...state, isLoadingArticles: false };
+      return {
+        ...state,
+        isLoadingArticles: false,
+        currentpage: action.nextPage
+      };
     }
     default: return state;
   }

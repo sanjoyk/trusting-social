@@ -34,7 +34,7 @@ export class ServerError extends BaseError {
     return true;
   }
   toString() {
-    return `${this.message} (${this.statusCode}) at ${this.url}`;
+    return `Server Error: ${this.message} (${this.statusCode}) at ${this.url}`;
   }
 }
 
@@ -42,7 +42,7 @@ export class ServerError extends BaseError {
 export class APIError extends BaseError {
   constructor(reason, statusCode, url) {
     // super( reason.message?reason.message.join(", "):  "API error", statusCode, url );
-    super(reason.message ? reason.message : "API error", statusCode, url);
+    super(reason.fault ? `API Error:  ${reason.fault.faultstring}` : "API error", statusCode, url);
     this.reason = reason;
   }
   isAPIError() {
@@ -81,5 +81,18 @@ export class TimeoutError extends BaseError {
   }
   toString() {
     return `Timeout: ${this.message} at ${this.url}`
+  }
+}
+
+//Representation of an "unauthorized" fetch response
+export class NoAccessError extends BaseError {
+  constructor(message, status, url) {
+    super(message, status, url);
+  }
+  toString() {
+    return "You don't have access to this item";
+  }
+  isUnauthorized() {
+    return true;
   }
 }
