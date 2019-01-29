@@ -14,6 +14,16 @@ const styles = theme => ({
     backgroundColor: theme.palette.background.paper,
   },
 
+  articleContainer: {
+    padding: "10px",
+    marginBottom: "15px",
+    "&:hover": {
+      boxShadow: "0 1px 4px 0 rgba(0, 0, 0, 0.14)",
+      borderRadius: "5px"
+    }
+
+  }
+
 
 });
 
@@ -49,10 +59,9 @@ class ArticleList extends PureComponent {
     if (multimedia && multimedia[0]) {
       return `https://www.nytimes.com/${multimedia[0].url}`;
     }
-    debugger
     return "https://www.nytimes.com/images/2018/11/04/travel/04Hours-Singapore5/merlin_143821452_ed4b5ea3-b52c-496a-9a16-3c225ef111c0-articleLarge.jpg";
-
   }
+
   render() {
     const { articlesByIds, classes } = this.props;
     return (
@@ -61,23 +70,34 @@ class ArticleList extends PureComponent {
           {
             Object.entries(articlesByIds).map(([key, { snippet, multimedia, pub_date: pubDate, source }]) => {
               return (
-                <GridItem style={{ display: "inline-block", padding: "10px", boxSizing: "border-box", border: "1px solid grey" }} xs={4} sm={4} md={4} key={key}>
-                  <div style={{ position: "relative", mixBlendMode: "difference", fontWeight: "bold" }}>
+                <GridItem style={{ display: "inline-block", boxSizing: "border-box" }} xs={4} sm={4} md={4} key={key}>
+                  <div className={classes.articleContainer}>
                     <img style={{ width: "100%" }}
                       src={this.getImageUrl(multimedia)}
                       alt=""
                     />
                     <p style={{
-                      position: "absolute",
-                      bottom: "0px",
+                      textTransform: "uppercase",
+                      color: "#47c8ec",
+                      fontSize: "12px",
+                      fontWeight: "400",
+                      fontStyle: "normal",
+                      fontStretch: "normal",
+                      lineHeight: "1.17",
+                      letterSpacing: "normal",
+                      textAlign: "left",
+                    }}>{`${source}/${pubDate}`}</p>
+
+                    <h2 style={{
+                      paddingTop: "10px",
+                      fontFamily: "Noto Serif,serif",
                       fontSize: "20px",
-                      marginBottom: "10px"
-                    }}>{source}</p>
+                      fontWeight: "700",
+                      lineHeight: "1.4",
+                      textAlign: "left",
+                      color: "#010001",
+                    }}>{snippet}</h2>
                   </div>
-
-                  <h2>{snippet}</h2>
-                  <p> {pubDate}</p>
-
                 </GridItem>
               )
             }
