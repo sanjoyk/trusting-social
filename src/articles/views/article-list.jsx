@@ -6,8 +6,6 @@ import GridItem from '../../app-components/grid-item';
 import { withStyles } from '@material-ui/core/styles';
 
 import { LazyLoadImage, trackWindowScroll, LazyLoadComponent } from 'react-lazy-load-image-component';
-import AppLoader from '../../app-components/app-loader';
-
 
 const styles = theme => ({
   root: {
@@ -27,9 +25,15 @@ const styles = theme => ({
     }
 
   }
-
-
 });
+
+
+function getFormattedDate(pubData) {
+  const dateObj = new Date(pubData);
+  var month = new Array(12); month = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+  var datePublished = dateObj.getUTCDate() + ' ' + month[dateObj.getUTCMonth()] + ', ' + dateObj.getUTCFullYear();
+  return datePublished;
+}
 
 
 class ArticleList extends PureComponent {
@@ -59,6 +63,8 @@ class ArticleList extends PureComponent {
     window.removeEventListener('scroll', this.loadArticlesOnScroll);
   }
 
+
+
   getImageUrl = (multimedia) => {
     if (multimedia && multimedia[0]) {
       return `https://www.nytimes.com/${multimedia[0].url}`;
@@ -75,7 +81,7 @@ class ArticleList extends PureComponent {
             Object.entries(articlesByIds).map(([key, { snippet, multimedia, pub_date: pubDate, source }]) => {
               return (
                 <LazyLoadComponent key={key} >
-                  <GridItem style={{ display: "inline-block", boxSizing: "border-box" }} xs={4} sm={4} md={4}>
+                  <GridItem onClick={() => { alert("clicked") }} style={{ display: "inline-block", boxSizing: "border-box", cursor: "pointer" }} xs={4} sm={4} md={4}>
                     <div className={classes.articleContainer}>
                       <LazyLoadImage
                         src={this.getImageUrl(multimedia)}
@@ -86,21 +92,17 @@ class ArticleList extends PureComponent {
                         beforeLoad={() => { console.log("laoding before") }}
                         afterLoad={() => console.log("After load")}
                         delayTime={10000}
-                        threshold={-100}
-                        placeholder={<AppLoader />}
+                        threshold={-200}
+                        placeholder={<img style={{ width: "100%" }} src="https://www.nytimes.com/images/2018/11/04/travel/04Hours-Singapore5/merlin_143821452_ed4b5ea3-b52c-496a-9a16-3c225ef111c0-videoThumb.jpg" alt="" />}
                       />
                       <p style={{
                         textTransform: "uppercase",
                         color: "#47c8ec",
                         fontSize: "12px",
                         fontWeight: "400",
-                        fontStyle: "normal",
-                        fontStretch: "normal",
                         lineHeight: "1.17",
-                        letterSpacing: "normal",
-                        textAlign: "left",
                       }}>
-                        {`${source}/${pubDate}`}
+                        {`${source} / ${getFormattedDate(pubDate)}`}
                       </p>
 
                       <h2 style={{
@@ -119,10 +121,10 @@ class ArticleList extends PureComponent {
                 </LazyLoadComponent>
               )
             }
-
             )
           }
         </GridContiner>
+
       </div>
 
     )

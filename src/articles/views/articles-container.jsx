@@ -28,9 +28,7 @@ class AriclesContainer extends PureComponent {
           isLoadingArticles &&
           <AppLoader message={`Loading ${Object.keys(articlesByIds).length > 0 ? "more" : ""} Articles...`} />
         }
-
       </>
-
     )
   }
 }
@@ -38,13 +36,13 @@ class AriclesContainer extends PureComponent {
 const mapStateToProps = (state) => {
   return {
     ...state.articles,
-
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    loadArticles: () => dispatch(loadArticles())
+    loadArticles: () => dispatch(loadArticles()),
+    showArticleDetails: (articleId) => dispatch()
   }
 }
 
