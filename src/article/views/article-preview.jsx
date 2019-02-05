@@ -1,6 +1,6 @@
 import React, { PureComponent } from "react";
 import { connect } from "react-redux";
-import { setArticlePreviewModal } from "../article-action.js";
+import { setArticlePreview } from "../article-action.js";
 import PreviewModal from "../components/preview-modal.jsx";
 
 class ArticlePreview extends PureComponent {
@@ -24,7 +24,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    closePreviewModal: () => dispatch(setArticlePreviewModal(false))
+    closePreviewModal: () => dispatch(setArticlePreview(false))
   }
 }
 

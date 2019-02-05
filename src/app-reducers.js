@@ -1,7 +1,7 @@
 import { AppAction } from "./app-constants";
 import { combineReducers } from "redux";
 import articles from "./articles/articles-reducers.js";
-import article from "./article/article-reducer.js";
+import articleSettings from "./article/article-reducer.js";
 
 const appDefault = {
   messages: [],
@@ -81,5 +81,5 @@ const app = (state = appDefault, action) => {
 export default combineReducers({
   app: app,
   articles: articles,
-  article: article,
+  articleSettings: articleSettings,
 });

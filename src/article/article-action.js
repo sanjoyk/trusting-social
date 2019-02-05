@@ -7,10 +7,16 @@ export function setArticleId(articleId) {
     articleId: articleId
   }
 }
-
-export function setArticlePreviewModal(status) {
+function setArticlePreviewModal(status) {
   return {
     type: ArticleAction.SET.ARTICLE_PREVIEW_MODAL,
     status: status
+  }
+}
+
+export function setArticlePreview(status, articleId) {
+  return (dispatch, getState) => {
+    dispatch(setArticleId(articleId))
+    dispatch(setArticlePreviewModal(status));
   }
 }
